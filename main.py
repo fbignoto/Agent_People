@@ -1,11 +1,12 @@
+from flask import Request
+
 def soma(a, b):
     return a + b
 
-def main():
-    print("Starting the program...")
-    result = soma(2, 5)
-    print(f"The result of the sum is: {result}")
-    print("Program finished.")
-
-# if __name__ == "__main__":
-#     main()
+def main(request: Request):
+    a = int(request.args.get('a', 0))
+    b = int(request.args.get('b', 0))
+    
+    result = soma(a, b)
+    
+    return f"O resultado da soma é: {result}"
