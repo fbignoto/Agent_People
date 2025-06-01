@@ -8,7 +8,7 @@ from langchain.tools import Tool
 from google.cloud import storage
 from langchain_community.document_loaders import TextLoader, CSVLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.tools.retriever import create_retriever_tool
 from langchain_community.vectorstores import FAISS
 
