@@ -1,0 +1,61 @@
+POLÍTICAS DA EMPRESA
+
+1. POLÍTICA DE FÉRIAS
+- Todos os colaboradores têm direito a 30 dias de férias por ano
+- As férias devem ser agendadas com no mínimo 30 dias de antecedência
+- É possível dividir as férias em até 3 períodos, sendo que um deles não pode ser inferior a 14 dias
+- A venda de 1/3 das férias é permitida mediante acordo prévio
+
+2. POLÍTICA DE TREINAMENTOS
+- Cada colaborador deve completar no mínimo 40 horas de treinamento por ano
+- Treinamentos obrigatórios: LGPD, Segurança da Informação, Código de Ética
+- A empresa oferece uma plataforma de cursos online disponível 24/7
+- Treinamentos externos podem ser solicitados através do gestor direto
+
+3. POLÍTICA DE HOME OFFICE
+- Modelo híbrido com mínimo de 2 dias presenciais por semana
+- Necessário ter equipamento e conexão adequados em casa
+- Horário de trabalho deve ser respeitado mesmo em home office
+- Reuniões importantes devem ser feitas com câmera ligada
+
+4. POLÍTICA DE BENEFÍCIOS
+- Plano de saúde e odontológico extensivo a dependentes
+- Vale refeição ou alimentação
+- Gympass
+- Day-off no aniversário
+
+5. POLÍTICA DE DESENVOLVIMENTO
+- Avaliações de desempenho semestrais
+- Plano de carreira em Y (técnica e gestão)
+- Programa de mentoria disponível
+- Incentivo a certificações técnicas
+
+6. POLÍTICA DE SEGURANÇA DA INFORMAÇÃO
+- Senhas devem ser trocadas a cada 90 dias
+- Proibido compartilhar credenciais de acesso
+- VPN obrigatória para acesso remoto
+- Documentos confidenciais não devem ser compartilhados externamente
+
+7. CÓDIGO DE VESTIMENTA
+- Casual business em dias normais
+- Casual nos dias de home office
+- Camiseta da empresa em eventos corporativos
+- Respeitar o bom senso e ambiente profissional
+
+8. HORÁRIO DE TRABALHO
+- Horário flexível entre 7h e 19h
+- Core hours: 10h às 16h
+- Banco de horas permitido
+- Horas extras devem ser previamente aprovadas
+
+9. POLÍTICA DE PROMOÇÕES
+- Avaliações para promoção realizadas anualmente
+- Critérios: desempenho, tempo de casa, desenvolvimento técnico
+- Feedback contínuo documentado
+- Plano de desenvolvimento individual requerido
+
+10. COMUNICAÇÃO INTERNA
+- Slack para comunicação diária
+- E-mail para comunicações formais
+- Teams para videoconferências
+- Documentação técnica no Confluence
