@@ -1,16 +1,46 @@
 import os
+import subprocess
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_community.agent_toolkits.load_tools import load_tools
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import HumanMessage, SystemMessage
+from langchain.tools import Tool
+
 
 load_dotenv()
 api_key = os.getenv('OPENAI_API_KEY')
 
 
 chat_model = ChatOpenAI(api_key=api_key, model='gpt-4o')
-tools = load_tools(["arxiv", "dalle-image-generator"])
+
+def call_gcp_function() -> str:
+    """Faz uma chamada para a Cloud Function no GCP"""
+    try:
+        result = subprocess.run(
+            ["gcloud", "auth", "print-identity-token"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        token = result.stdout.strip()
+        function_url = os.getenv('GCP_FUNCTION_GET_TIME')
+        curl_command = [
+            "curl",
+            "-H", f"Authorization: Bearer {token}",
+            f"{function_url}"
+        ]
+        result = subprocess.run(curl_command, capture_output=True, text=True, check=True)
+        return result.stdout
+    except subprocess.CalledProcessError as e:
+        return f"Erro ao chamar a função: {str(e)}"
+
+gcp_function_tool = Tool(
+    name="Buscar_diaatual",
+    description="Faz uma chamada para a Cloud Function no GCP que retorna o dia atual.",
+    func=lambda x: call_gcp_function()
+)
+tools = [gcp_function_tool]
 system_prompt = SystemMessage(
     """
     Você é a Rhaissa, funcionária do RH da empresa. 
