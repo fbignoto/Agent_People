@@ -2,3 +2,6 @@ README.md
 .git
 .env
 .gitignore
+.gcloudignore
+scripts/**
+bucket_rhaissa/**
