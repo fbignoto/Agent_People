@@ -1,0 +1,11 @@
+nome,data_nascimento,ferias_inicio,ferias_fim,treinamentos_pendentes,cargo,equipe,area
+Ana Silva,1992-03-15,2024-06-10,2024-06-30,["Liderança","Comunicação Efetiva"],Analista Senior,Tech,Tecnologia
+João Santos,1988-07-22,2024-08-01,2024-08-20,["LGPD","Gestão de Projetos"],Tech Lead,Squad Pagamentos,Tecnologia
+Maria Oliveira,1995-11-05,2024-04-15,2024-05-05,["Cybersegurança"],Desenvolvedora,Squad Produtos,Tecnologia
+Pedro Costa,1990-01-30,2024-07-15,2024-08-03,["Agilidade","DevOps"],Arquiteto,Arquitetura,Tecnologia
+Carla Souza,1993-09-12,2024-03-20,2024-04-10,["Design Thinking","UX"],Designer,UX/UI,Produtos
+Lucas Pereira,1991-05-25,2024-05-01,2024-05-20,["AWS","Python Avançado"],Engenheiro de Dados,Data,Analytics
+Julia Ferreira,1994-12-03,2024-09-10,2024-09-30,["Power BI","SQL"],Analista de Dados,Business Intelligence,Analytics
+Ricardo Martins,1989-08-17,2024-02-15,2024-03-05,["Gestão de Pessoas","OKRs"],Gerente,Gestão,RH
+Beatriz Lima,1996-04-08,2024-10-01,2024-10-20,["Metodologias Ágeis"],Scrum Master,Agile,Produtos
+Fernando Gomes,1987-06-20,2024-11-05,2024-11-25,["Governança","Compliance"],Coordenador,Governança,Tecnologia
