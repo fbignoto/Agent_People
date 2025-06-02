@@ -17,8 +17,6 @@ from langchain_google_vertexai import ChatVertexAI
 load_dotenv()
 api_key = os.getenv('OPENAI_API_KEY')
 
-# chat_model = ChatOpenAI(api_key=api_key, model='gpt-4o')
-
 # Criação do modelo Gemini
 chat_model = ChatVertexAI(
     model_name="gemini-2.0-flash-lite-001",      

@@ -5,3 +5,4 @@ README.md
 .gcloudignore
 scripts/**
 bucket_rhaissa/**
+temp/
