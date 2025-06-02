@@ -1,7 +1,6 @@
 import os
 import subprocess
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain.tools import Tool
@@ -11,12 +10,22 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.tools.retriever import create_retriever_tool
 from langchain_community.vectorstores import FAISS
+from langchain_google_vertexai import ChatVertexAI
+
 
 # Configurações iniciais
 load_dotenv()
 api_key = os.getenv('OPENAI_API_KEY')
 
-chat_model = ChatOpenAI(api_key=api_key, model='gpt-4o')
+# chat_model = ChatOpenAI(api_key=api_key, model='gpt-4o')
+
+# Criação do modelo Gemini
+chat_model = ChatVertexAI(
+    model_name="gemini-2.0-flash-lite-001",      
+    temperature=0.7,
+    project=os.getenv('GOOGLE_CLOUD_PROJECT'),        
+    location=os.getenv('GOOGLE_CLOUD_LOCATION'),           
+)
 
 system_prompt = SystemMessage(
     """
