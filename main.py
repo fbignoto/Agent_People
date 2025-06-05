@@ -12,18 +12,18 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.tools.retriever import create_retriever_tool
 from langchain_community.vectorstores import FAISS
 from langchain_google_vertexai import ChatVertexAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 app = Flask(__name__)
 
 # Configurações iniciais
 load_dotenv()
-api_key = os.getenv('OPENAI_API_KEY')
 
 chat_model = ChatVertexAI(
     model_name="gemini-2.0-flash-lite-001",      
     temperature=0.7,
-    project=os.getenv('GOOGLE_CLOUD_PROJECT'),        
-    location=os.getenv('GOOGLE_CLOUD_LOCATION'),           
+    project=f"{os.getenv('GOOGLE_CLOUD_PROJECT')}",        
+    location=f"{os.getenv('GOOGLE_CLOUD_LOCATION')}",           
 )
 
 system_prompt = SystemMessage(
@@ -37,15 +37,17 @@ system_prompt = SystemMessage(
 )
 
 # Knowledge Base
-storage_client = storage.Client()
-bucket_name = os.getenv('GCP_BUCKET_NAME')
-bucket = storage_client.bucket(bucket_name)
+# storage_client = storage.Client()
+# bucket_name = os.getenv('GCP_BUCKET_NAME', 'bucket_rhaissa')
+# bucket = storage_client.bucket(bucket_name)
 
 def download_from_gcs(blob_name: str, local_path: str):
+    print(f"Downloading {blob_name} from GCS bucket {bucket_name} to {local_path}")
     blob = bucket.blob(blob_name)
     blob.download_to_filename(local_path)
 
 def create_knowledge_base():
+    print("Creating knowledge base from GCS files")
     if not os.path.exists('temp'):
         os.makedirs('temp')
 
@@ -76,17 +78,10 @@ def create_knowledge_base():
     
     return vectorstore
 
-knowledge_base = create_knowledge_base()
-
-search_tool = create_retriever_tool(
-    retriever=knowledge_base.as_retriever(),
-    name="search_knowledge_base",
-    description="Útil para buscar informações sobre funcionários, políticas da empresa, treinamentos, e férias."
-)
-
 # Tools
 def call_gcp_function() -> str:
     """Faz uma chamada para a Cloud Function no GCP"""
+    print("Chamando a Cloud Function para obter o dia atual")
     try:
         result = subprocess.run(
             ["gcloud", "auth", "print-identity-token"],
@@ -106,18 +101,8 @@ def call_gcp_function() -> str:
     except subprocess.CalledProcessError as e:
         return f"Erro ao chamar a função: {str(e)}"
 
-gcp_function_tool = Tool(
-    name="Buscar_diaatual",
-    description="Faz uma chamada para a Cloud Function no GCP que retorna o dia atual.",
-    func=lambda x: call_gcp_function()
-)
-
-tools = [gcp_function_tool, search_tool]
-
-# Agente
-agent = create_react_agent(chat_model, tools)
-
 def execute(agent, query):
+    print("Iniciando execução do agente")
     response = agent.invoke({
         'messages': [
             system_prompt,
@@ -130,14 +115,32 @@ def execute(agent, query):
     return ai_response
 
 @app.route('/', methods=['POST'])
-def handle_request():
+def handle_request(request):
     request_json = request.get_json(silent=True)
     query = request_json.get('query') if request_json else ''
-    
+    print(f"Received query: {query}")
     if not query:
         return jsonify({'error': 'No query provided'}), 400
     
     try:
+        gcp_function_tool = Tool(
+            name="Buscar_diaatual",
+            description="Faz uma chamada para a Cloud Function no GCP que retorna o dia atual.",
+            func=lambda x: call_gcp_function()
+        )
+
+        # knowledge_base = create_knowledge_base()
+
+        # search_tool = create_retriever_tool(
+        #     retriever=knowledge_base.as_retriever(),
+        #     name="search_knowledge_base",
+        #     description="Útil para buscar informações sobre funcionários, políticas da empresa, treinamentos, e férias."
+        # )
+
+        tools = [gcp_function_tool]
+
+        agent = create_react_agent(chat_model, tools)
+
         response = execute(agent, query)
         return jsonify({'response': response})
     except Exception as e:
