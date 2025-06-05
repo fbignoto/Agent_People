@@ -19,8 +19,8 @@ app = Flask(__name__)
 # Configurações iniciais
 load_dotenv()
 
-chat_model = ChatVertexAI(
-    model_name="gemini-2.0-flash-lite-001",      
+chat_model = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash-preview-04-17",
     temperature=0.7,
     project=f"{os.getenv('GOOGLE_CLOUD_PROJECT')}",        
     location=f"{os.getenv('GOOGLE_CLOUD_LOCATION')}",           
@@ -81,22 +81,26 @@ def create_knowledge_base():
 # Tools
 def call_gcp_function() -> str:
     """Faz uma chamada para a Cloud Function no GCP"""
+
     print("Chamando a Cloud Function para obter o dia atual")
     try:
-        result = subprocess.run(
-            ["gcloud", "auth", "print-identity-token"],
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        token = result.stdout.strip()
+        # print("Obtendo token de identidade do GCP")
+        # result = subprocess.run(
+        #     ["gcloud", "auth", "print-identity-token"],
+        #     capture_output=True,
+        #     text=True,
+        #     check=True
+        # )
+        # token = result.stdout.strip()
+
         function_url = os.getenv('GCP_FUNCTION_GET_TIME')
+        print(f"Function URL: {function_url}")
         curl_command = [
             "curl",
-            "-H", f"Authorization: Bearer {token}",
             f"{function_url}"
         ]
         result = subprocess.run(curl_command, capture_output=True, text=True, check=True)
+        print(f"Response from GCP function: {result}")
         return result.stdout
     except subprocess.CalledProcessError as e:
         return f"Erro ao chamar a função: {str(e)}"
@@ -124,9 +128,9 @@ def handle_request(request):
     
     try:
         gcp_function_tool = Tool(
-            name="Buscar_diaatual",
+            name="Buscar_dia_atual",
             description="Faz uma chamada para a Cloud Function no GCP que retorna o dia atual.",
-            func=lambda x: call_gcp_function()
+            func=lambda _: call_gcp_function()
         )
 
         # knowledge_base = create_knowledge_base()
