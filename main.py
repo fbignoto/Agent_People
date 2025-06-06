@@ -1,17 +1,14 @@
 import os
 import subprocess
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 from dotenv import load_dotenv
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain.tools import Tool
-from google.cloud import storage
 from langchain_community.document_loaders import TextLoader, CSVLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain.tools.retriever import create_retriever_tool
 from langchain_community.vectorstores import FAISS
-from langchain_google_vertexai import ChatVertexAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 app = Flask(__name__)
@@ -21,9 +18,7 @@ load_dotenv()
 
 chat_model = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash-preview-04-17",
-    temperature=0.7,
-    project=f"{os.getenv('GOOGLE_CLOUD_PROJECT')}",        
-    location=f"{os.getenv('GOOGLE_CLOUD_LOCATION')}",           
+    temperature=0.7        
 )
 
 system_prompt = SystemMessage(
