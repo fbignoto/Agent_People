@@ -38,6 +38,6 @@ if __name__ == "__main__":
     current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     folder_path = os.path.join(current_dir, "bucket_rhaissa")
     
-    # create_bucket(bucket_name, location, project_id)
+    create_bucket(bucket_name, location, project_id)
     
-    # upload_files_to_bucket(bucket_name, folder_path)
+    upload_files_to_bucket(bucket_name, folder_path)
