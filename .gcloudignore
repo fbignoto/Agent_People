@@ -1,6 +1,7 @@
 README.md
 .git
 .env
+.env.example
 .gitignore
 .gcloudignore
 scripts/**
